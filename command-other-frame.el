@@ -1,45 +1,33 @@
-;;; command-other-frame.el -- Run commands in another frame.
-;;
-;;   Copyright (c) 1995 - 1997 heddy Boubaker C.E.N.A
-;;
-;;   Author: Heddy Boubaker <heddy.Boubaker@cena.dgac.fr>
-;;   Maintainer: Heddy Boubaker <heddy.Boubaker@cena.dgac.fr>
-;;   Created: Wed Aug  9 15:11:43 1995
-;;   Last Modified: 1997/06/05 14:40:59
-;;   Version: 1.9
-;;   Keywords: command, frame
-;;   Tested for:
-;;     XEmacs (Lucid GNU Emacs) >= 19.12
-;;     Must work with FSF GNU Emacs >= 19.28 ;-)
-;;   Ftp access:
-;;    ftp://ftp.cenatls.cena.dgac.fr/pub/Emacs/command-other-frame-<v number>.el.Z
-;;    ftp://archive.cis.ohio-state.edu/pub/gnu/emacs/elisp-archive/misc/command-other-frame.el.Z
-;;   WWW access:
-;;    <URL http://www.cenatls.cena.dgac.fr/~boubaker/Emacs/index.html>
-;;
-;; LCD Archive Entry:
-;; command-other-frame|Heddy Boubaker|boubaker@dgac.fr|
-;; Run commands in another frame.|
-;; 1997/06/05 14:40:59|1.9|~/misc/command-other-frame.el.Z|
-;;
-;;; This file is NOT part of GNU Emacs but the same permissions apply.
-;;
-;; GNU Emacs is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published
-;; by the Free Software Foundation; either version 2, or (at your
-;; option) any later version.
-;;
-;; GNU Emacs is distributed in the hope that it will be useful, but
-;; WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-;;
+;;; command-other-frame.el -- run commands in another frame
+
+;; Copyright (C) 1995-1997  Heddy Boubaker
+
+;; Author: Heddy Boubaker <heddy.Boubaker@cena.dgac.fr>
+;; Maintainer: wanted
+;; Created: 19950809
+;; Version: 1.9.1
+;; Keywords: command, frame
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-;;
-;;  *** HOW TO READ THIS FILE ***
-;;  Use (outline-mode) with (setq outline-regexp ";; @+").
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; This package needs a new maintainer.  Please contact the original
+;; author if you are interested.
+
 ;;
 ;; @ Purpose:
 ;; ==========
@@ -268,6 +256,7 @@
 ;; @ ChangeLog:
 ;; ============
 ;;
+;;  v1.9.1: Cleanup without actually making the package usable again.
 ;;  v1.9: Some debug done...
 ;;        Using Per Abrahamsen's custom
 ;;        New policies: initial, current, last, default.
@@ -303,16 +292,17 @@
 ;; @ Contributors/Helpers:
 ;; =======================
 ;;
-;;  lepied@cenaath.cena.dgac.fr (Frederic Lepied [STERIA SIT] 69577103)
-;;  goldman@src.honeywell.com (Robert P. Goldman)
-;;  Hans Chalupsky <hans@cs.Buffalo.EDU> help for use with defadvice.
-;;  "Todd A. Scalzott" <todd@kastle.com>
-;;  Kevin Esler <esler@pureatria.com>
+;;  Frederic Lepied <lepied@cenaath.cena.dgac.fr>
+;;  Hans Chalupsky <hans@cs.Buffalo.edu>
 ;;  Jens-U H Petersen <petersen@kurims.kyoto-u.ac.jp>
+;;  Kevin Esler <esler@pureatria.com>
+;;  Robert P. Goldman <goldman@src.honeywell.com>
+;;  Todd A. Scalzott <todd@kastle.com>
 ;;
 ;; @ ToDo:
 ;; =======
 ;;
+;;  Find a new maintainer.
 ;;  Correcting known bugs and others :)
 ;;  Improving dead-frames deletion.
 ;;  Improving command-other-frame-auto behaviour.
@@ -320,33 +310,16 @@
 ;;  Loocking for a better hook where to put cof--cleanup in FSF Emacs.
 ;;  Improving the way c-o-f-auto use pre-command-hook. 
 ;; 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 
+;;; Code:
+
 ;; @ Requirements ;;;
 
-;; frames stuff
-(require 'frame)
-;; CL stuff
 (require 'cl)
-;; Display of frames auto sign as X Pixmap
-(eval-and-compile
-  (condition-case ()
-      (require 'xpm)
-    (error nil)))
-;;; For using custom - stolen from w3-cus.el -
-(eval-and-compile
-  (condition-case ()
-      (require 'custom)
-    (error nil))
-  (if (and (featurep 'custom) (fboundp 'custom-declare-variable))
-      nil ;; We've got what we needed
-    ;; We have the old custom-library, hack around it!
-    (defmacro defgroup (&rest args)
-      nil)
-    (defmacro defcustom (var value doc &rest args) 
-      (` (defvar (, var) (, value) (, doc)))))) 
+(require 'xpm)
 
-;; Custom groups 
+;; @ Custom groups ;;;
+
 (defgroup command-other-frame nil
   "Running commands in other frames."
   :link '(url-link :tag "Author Homepage"
@@ -1301,7 +1274,6 @@ In the `*scratch*' buffer, evaluate:")))
 
 ;;; Local variables:
 ;;; outline-regexp: ";; @+"
-;;; byte-optimize: t
 ;;; eval: (outline-minor-mode 1)
 ;;; End:
 
